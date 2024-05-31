@@ -1,0 +1,21 @@
+function sout = getBeamletParams(filename, results_folder, parent_location)
+   close all;
+    
+    sout = struct();
+    % Read the output text file line by line and extract the data blocks of
+    % interest:
+    
+    fileID = getFileID(parent_location, filename);
+    
+    textline = fgetl(fileID);
+    while ~contains(textline,'Discharge Plasma Parameters')
+        textline = fgetl(fileID);
+    end
+    sout.BeamletCurrent = sscanf(textline,'%*s %*s %*s %*s %*s %f  %*s %*f %*s %*s %*f %*s %*s %*s %*f');
+    sout.DischargeTe = sscanf(textline,   '%*s %*s %*s %*s %*s %*f %*s %f  %*s %*s %*f %*s %*s %*s %*f');
+    sout.DownstreamTe = sscanf(textline,  '%*s %*s %*s %*s %*s %*f %*s %*f %*s %*s %f  %*s %*s %*s %*f');
+    sout.GammaDoubles = sscanf(textline,  '%*s %*s %*s %*s %*s %*f %*s %*f %*s %*s %*f %*s %*s %*s %f' );
+    % Discharge Plasma Parameters:  Beamlet Current  7.140E-06  Te        5.0   Te Downstream         2.0   Double-to-Single Current Ratio       0.080
+    %textline = fgetl(fileID);
+    
+end
